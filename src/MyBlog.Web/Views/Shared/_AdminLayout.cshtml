@@ -1,0 +1,85 @@
+﻿<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>首页信息 - Ace Admin</title>
+
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="@Url.Content("~/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/font-awesome/4.5.0/css/font-awesome.min.css")" />
+
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="@Url.Content("~/css/fonts.googleapis.com.css")" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="@Url.Content("~/css/ace.min.css")" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="@Url.Content("~/css/ace-part2.min.css")" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="@Url.Content("~/css/ace-skins.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/ace-rtl.min.css")" />
+
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="@Url.Content("~/css/ace-ie.min.css")" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="@Url.Content("~/js/ace-extra.min.js")"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="@Url.Content("~/js/html5shiv.min.js")"></script>
+    <script src="@Url.Content("~/js/respond.min.js")"></script>
+    <![endif]-->
+
+    <script src="@Url.Content("~/js/jquery-2.1.4.min.js")"></script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script src="@Url.Content("~/js/jquery-1.11.3.min.js")"></script>
+    <![endif]-->
+
+    <script src="@Url.Content("~/js/bootstrap.min.js")"></script>
+
+    <script src="@Url.Content("~/js/ace-elements.min.js")"></script>
+    <script src="@Url.Content("~/js/ace.min.js")"></script>
+
+</head>
+<body style="background-color:white">
+    @RenderBody()
+
+
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='@Url.Content("~/js/jquery.mobile.custom.min.js")'>"+"<"+"/script>");
+    </script>
+
+    <!-- page specific plugin scripts -->
+    <!-- ace scripts -->
+
+
+    <script type="text/javascript">
+        $('.nav.nav-list li ul li').each(function () {
+            this.onclick = function () {
+                $('.main-content').load($(this).data("link"));
+                $('.nav.nav-list li').each(
+                function ()
+                {
+                    if ($(this).attr("class") == "active" || $(this).attr("class") == "active open" || $(this).attr("class") == "open active")
+                    {
+                        $(this).removeClass("active")
+                    }
+                });
+                $($(this).parents(".nav.nav-list li")[0]).addClass("active");
+                //$($(this).parent).addClass("active");
+                $(this).addClass("active");
+            };
+        });
+    </script>
+</body>
+</html>
+

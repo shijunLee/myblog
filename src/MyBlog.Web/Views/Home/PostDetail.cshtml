@@ -1,0 +1,271 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyBlog.Model.ViewModel;
+ 
+@model  Tuple<PostDetialViewModel, List<TagCloudViewModel>>
+ 
+<style type="text/css">
+    header.intro-header {
+        position: relative;
+        background-image: url('@(Model != null & Model.Item1 != null && Model.Item1.PostHeaderImageUrl != null ? Model.Item1.PostHeaderImageUrl : Url.Content("~/img/home-bg.jpg"))');
+    }
+
+  
+
+    header.intro-header .header-mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, @(Model != null & Model.Item1 != null && Model.Item1.PostHeaderMask != null ? Double.Parse(Model.Item1.PostHeaderMask) : 0));
+    }
+
+    
+</style>
+<header class="intro-header">
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        @{
+                            if (Model != null & Model.Item1 != null && Model.Item1.PostTags.Count > 0)
+                            {
+                                foreach (var item in Model.Item1.PostTags)
+                                {
+                                    <a class="tag" href="@Url.Content("~/tag/#")@item" title="@item">@item</a>
+                                }
+                            }
+                        } 
+                    </div>
+                    <h1>@(Model != null & Model.Item1 != null ? Model.Item1.PostTitle : string.Empty)</h1>
+                    @{
+                        if (Model != null & Model.Item1 != null && !string.IsNullOrWhiteSpace(Model.Item1.PostSubTitle))
+                        {
+
+                            <h2 class="subheading">@Model.Item1.PostSubTitle</h2>
+                        }
+                    }
+                 
+                   
+                    <span class="meta">Posted by 李士军 on @(Model != null & Model.Item1 != null ? Model.Item1.PostDate : string.Empty)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="
+                 col-lg-8 col-lg-offset-2
+                 col-md-10 col-md-offset-1
+                 post-container">
+                @Html.Raw(Model != null & Model.Item1 != null ? Model.Item1.PostContent : string.Empty)
+                <hr style="visibility: hidden;">
+               
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="@(Model != null & Model.Item1 != null ? Model.Item1.PostId : 0)"
+                     data-title="@(Model != null & Model.Item1 != null ? Model.Item1.PostTitle : string.Empty)"
+                     data-url="@Url.Content("~/Home/Post")?postId=@(Model != null & Model.Item1 != null ? Model.Item1.PostId : 0)&postLayout=@(Model != null & Model.Item1 != null ? Model.Item1.PostLayoutType : 1)"
+                     data-images="@(Model != null & Model.Item1 != null && Model.Item1.PostHeaderImageUrl != null ? Model.Item1.PostHeaderImageUrl : Url.Content("~/img/home-bg.jpg"))"
+                     data-content="@(Model != null & Model.Item1 != null && !string.IsNullOrWhiteSpace(Model.Item1.PostContent) ?(Model.Item1.PostContent.Length>80? Model.Item1.PostContent.Substring(0, 80): Model.Item1.PostContent) : string.Empty) ">
+                    <div class="ds-share-inline">
+                        <style>
+                            .ds-share-icons-16 {
+                                display: none;
+                            }
+                        </style>
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                @*{% endif %}*@
+
+
+                <ul class="pager">
+                  @{
+                      if (Model != null & Model.Item1 != null && Model.Item1.Previous != null)
+                      {
+
+                        <li class="previous">
+                            <a href="@Url.Content("~/Home/Post")?postId=@Model.Item1.Previous.PostId&postLayout=@Model.Item1.Previous.PostLayoutType" data-toggle="tooltip" data-placement="top" title="@Model.Item1.Previous.PostTitle">
+                                Previous<br>
+                                <span>@Model.Item1.Previous.PostTitle</span>
+                            </a>
+                        </li>
+                      }
+                  }
+                    @{
+                        if (Model != null & Model.Item1 != null && Model.Item1.Next != null)
+                        {
+
+                            <li class="next">
+                                <a href="@Url.Content("~/Home/Post")?postId=@Model.Item1.Next.PostId&postLayout=@Model.Item1.Next.PostLayoutType" data-toggle="tooltip" data-placement="top" title="@Model.Item1.Next.PostTitle">
+                                    Next<br>
+                                    <span>@Model.Item1.Next.PostTitle</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                    
+                </ul>
+
+          
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="@(Model != null & Model.Item1 != null ? Model.Item1.PostId : 0)"
+                         data-title="@(Model != null & Model.Item1 != null ? Model.Item1.PostTitle : string.Empty)"
+                         data-url="@Url.Content("~/Home/Post")?postId=@(Model != null & Model.Item1 != null ? Model.Item1.PostId : 0)&postLayout=@(Model != null & Model.Item1 != null ? Model.Item1.PostLayoutType : 1)">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+               
+
+            </div>
+            <!-- Side Catalog Container -->
+           @{
+               if (Model != null & Model.Item1 != null && Model.Item1.PostLayoutType == 2)
+               {
+                        <div class="
+                             col-lg-2 col-lg-offset-0
+                             visible-lg-block
+                             sidebar-container
+                             catalog-container">
+                            <div class="side-catalog">
+                                <hr class="hidden-sm hidden-xs">
+                                <h5>
+                                    <a class="catalog-toggle" href="#">CATALOG</a>
+                                </h5>
+                                <ul class="catalog-body"></ul>
+                            </div>
+                        </div>
+
+               }
+        }
+           
+            
+
+            <!-- Sidebar Container -->
+            <div class="
+                 col-lg-8 col-lg-offset-2
+                 col-md-10 col-md-offset-1
+                 sidebar-container">
+                <!-- Featured Tags -->
+              
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tag/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        @{
+                            if (Model != null && Model.Item2 != null && Model.Item2.Count > 0)
+                            {
+                                foreach (var item in Model.Item2)
+                                {
+                                    if (item.TagPostCount > 1)
+                                    {
+
+                                        <a href="/tag/#@item.TagName" title="@item.TagName" rel="@item.TagPostCount">
+                                            @item.TagName
+                                        </a>
+                                    }
+                                }
+
+                            }
+                        }
+                        
+                    </div>
+                </section>
+              
+
+                <!-- Friends Blog -->
+                @*{% if site.friends %}
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    {% for friend in site.friends %}
+                    <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}*@
+            </div>
+        </div>
+    </div>
+</article>
+
+ 
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'lishijun';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+  
+ 
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+ 
+ 
+    <style>
+      @@media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    } 
+  </style>
+ 

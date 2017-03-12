@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+    
+}
+@model List<String>
+
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Blog管理</a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "ImageUpload")">图片上传</a>
+            </li>
+            <li class="active">首页</li>
+        </ul><!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="row">
+            <div class="col-xs-12">
+               
+            
+                <!-- PAGE CONTENT BEGINS -->
+                <article class="col-md-12" style="padding-left:0px">
+                    <form method="post" role="form" enctype="multipart/form-data" action="@Url.Content("~/ImageUpload/Index")">
+                        <div class="panel panel-default" style="border: 1px solid #ffd800;">
+                            <div class="panel-heading" style="background-color: #ffd800; color: #ffffff;">
+                                <h5><b>请，选择上传文件：</b></h5>
+                            </div>
+                            <div class="panel-body">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <label for="exampleInputFile">选择上传文件：</label>
+                                        </td>
+                                        <td>
+                                            <input id="lefile" type="file" name="files" style="display: none;" />
+                                            <div class="input-append">
+                                                <input id="photoCover" class="input-large" type="text" style="height: 30px !important; border-radius:5px !important; border:1px solid #CCCCCC !important; padding-left:10px !important;" placeholder="FileUpload" />
+                                                <a class="btn" onclick="$('input[id=lefile]').click();"
+                                                    style="background-color:#FFD800 !important; height:30px !important; color:#ffffff !important; width:100px !important;border:0px !important;border-radius:5px !important;">上传</a>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="submit" value="保存" class="btn btn-primary pull-right" />
+                                        </td>
+                                    </tr>
+                                    @{
+                                        if (Model != null && Model.Count > 0)
+                                        {
+                                            int i = 0;
+                                            foreach (var item in Model)
+                                            {
+
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <input type="hidden" value="@item" id="files_@i++" name="fileUrls" />
+                                                        <label>@item</label>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                      
+                    </form>
+                </article>
+
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+<script type="text/javascript">
+                                    $('input[id=lefile]').change(function () {
+                                        $('#photoCover').val($(this).val());
+                                    });
+</script>

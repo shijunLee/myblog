@@ -1,0 +1,97 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using MyBlog.Model.ViewModel;
+@model List<TagPostsViewModel>
+<header class="intro-header" style="background-image: url('/img/tag-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading" id="tag-heading">
+                    <h1>Tags</h1>
+                    <span class="subheading">keep hungry keep foolish</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 标签云 -->
+            <div id='tag_cloud' class="tags">
+                @*//{% for tag in site.tags %}*@
+                @{
+                    if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <a href="#@item.TagName" title="@item.TagName" rel="@item.TagPostCount">@item.TagName</a>
+                        }
+                    }
+                }
+                @*//{% endfor %}*@
+            </div>
+
+            <!--<blockquote class="tag-comments">
+                标签命名规范：
+                    <li>行业观察、职位、公司优先使用中文</li>
+                    <li>外国产品、术语优先使用英文</li>
+            </blockquote>-->
+            <!-- 标签列表 -->
+            @{
+                if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="one-tag-list">
+                            <span class="fa fa-tag listing-seperator" id="@item.TagName">
+                                <span class="tag-text">@item.TagName</span>
+                            </span>
+                            @{
+                                foreach (var post in item.TagPostInfos)
+                                {
+                                    <!-- <li class="listing-item">
+                                                            <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                                                            <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                                                            </li> -->
+                                    <div class="post-preview">
+                                        <a href="@Url.Content("~/Home/PostDetail")?postId=@post.PostId">
+                                            <h2 class="post-title">
+                                               @post.PostTitle
+                                            </h2>
+                                            @*{% if post.subtitle %}*@
+                                            @{
+                                                if (!string.IsNullOrWhiteSpace(post.PostSubTitle))
+                                                {
+                                                    <h3 class="post-subtitle">
+                                                        @post.PostSubTitle
+                                                    </h3>
+                                                }
+                                            }
+                                            
+                                            @*{% endif %}*@
+                                        </a>
+                                        <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                                    </div>
+                                    <hr>
+                                }
+                            }
+                            @*{% for post in tag[1] %}*@
+                        
+                            @*{% endfor %}*@
+                        </div>
+                    }
+                }
+            }
+            @*{% for tag in site.tags %}*@
+            
+            @*{% endfor %}*@
+
+        </div>
+    </div>
+</div>

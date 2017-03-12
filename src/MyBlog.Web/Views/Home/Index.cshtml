@@ -1,0 +1,220 @@
+﻿@{
+    ViewData["Title"] = "首页";
+    //Layout = null;
+}
+@using MyBlog.DAL;
+@using MyBlog.DAL.View;
+ 
+@using MyBlog.Model.ViewModel;
+@model   Tuple<PageInfo<PostListViewModel>, List<TagCloudViewModel>>
+
+<!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>WhiteLee 的博客</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">宁静致远</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        @{
+
+            if (Model.Item1 != null)
+            {
+                <div class="
+                     col-lg-8 col-lg-offset-1
+                     col-md-8 col-md-offset-1
+                     col-sm-12
+                     col-xs-12
+                     post-container
+                     ">
+                    @{
+                        foreach (var item in Model.Item1.Value)
+                        {
+ <!-- Post Container -->
+
+                            <div class="post-preview">
+                                <a href="@Url.Content("~/Home/Post")?postId=@item.PostId&postLayout=@item.PostLayout">
+                                    <h2 class="post-title">
+                                        @item.PostTitle
+                                    </h2>
+
+                                    <div class="post-content-preview">
+                                        @item.PostContentPreview
+                                    </div>
+                                </a>
+                                <p class="post-meta">
+                                    Posted on @item.PostCreateTime
+                                </p>
+                            </div>
+                            <hr>
+
+                        }
+                    }
+                    <!-- Pager -->
+                    <ul class="pager">
+                        @{
+
+                            if (Model.Item1.CurrentPage > 1)
+                            {
+
+                                <li class="previous">
+                                    <a href="@Url.Content("~/Home/Index?page=")@(Model.Item1.CurrentPage + 1)&pageSize=10">Newer Posts &rarr;</a>
+                                </li>
+                            }
+
+                            if (Model.Item1.TotalPage > Model.Item1.CurrentPage)
+                            {
+
+                                <li class="next">
+                                    <a href="@Url.Content("~/Home/Index?page=")@(Model.Item1.CurrentPage + 1)&pageSize=10">Older Posts &rarr;</a>
+                                </li>
+                            }
+                        } 
+                    </ul>
+                </div>
+                            }
+
+        }
+
+
+        <!-- USE SIDEBAR -->
+        <!-- Sidebar Container -->
+        <div class="
+             col-lg-3 col-lg-offset-0
+             col-md-3 col-md-offset-0
+             col-sm-12
+             col-xs-12
+             sidebar-container
+             ">
+            <!-- Featured Tags -->
+
+            <section>
+                <hr class="hidden-sm hidden-xs">
+                <h5><a href="">FEATURED TAGS</a></h5>
+                <div class="tags">
+
+                    @{
+                        if (Model.Item2 != null && Model.Item2.Count > 0)
+                        {
+
+                            foreach (var item in Model.Item2)
+                            {
+
+                                <a href="/tag/#@item.TagName" title="@item.TagName" rel="@item.TagPostCount">
+                                    @item.TagName
+                                </a>
+                            }
+                        }
+                    }
+                   
+                </div>
+            </section>
+
+            <!-- Short About -->
+            <section class="visible-md visible-lg">
+                <hr><h5><a href="">ABOUT ME</a></h5>
+                <div class="short-about">
+                    <img src="/img/avatar.jpg" />
+                    <p>Be a focused & creative doer!</p>
+                    <!-- SNS Link -->
+                    <ul class="list-inline">
+                        <li>
+                            <a target="_blank" href="https://www.zhihu.com/people/oldratlee">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="http://weibo.com/oldratlee">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.facebook.com/oldratlee">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://github.com/oldratlee">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <!-- Friends Blog -->
+            <hr>
+            <h5>FRIENDS</h5>
+            <ul class="list-inline">
+                @*{% for friend in site.friends %}*@
+                <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+                @*{% endfor %}*@
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- jQuery -->
+@*<script src="/js/jquery.min.js "></script>*@
+<!-- Bootstrap Core JavaScript -->
+@*<script src="/js/bootstrap.min.js "></script>*@
+<!-- Custom Theme JavaScript -->
+@*<script src="/js/hux-blog.min.js "></script>*@
+
+<!-- async load function -->
+@*<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>*@
+<!-- Highlight.js -->
+@*<script>
+    async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function () {
+        hljs.initHighlightingOnLoad();
+    })
+    // only load tagcloud.js in tag.html
+    if ($('#tag_cloud').length !== 0) {
+        async("/js/jquery.tagcloud.js", function () {
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: { start: '#bbbbee', end: '#0085a1' },
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>*@
+@*<link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">*@
+<!--fastClick.js -->
+@*<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>*@

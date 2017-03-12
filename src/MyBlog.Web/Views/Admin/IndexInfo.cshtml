@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model MyBlog.Model.ViewModel.Admin.IndexInfoViewModel
+
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">Blog管理</a>
+                </li>
+
+                <li>
+                    <a href="@Url.Action("Index","Admin")">首页</a>
+                </li>
+                <li class="active">信息</li>
+            </ul><!-- /.breadcrumb -->
+
+
+        </div>
+
+        <div class="page-content">
+           
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS --> 
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <i class="fa fa-list fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <p class="announcement-heading">@Model.BlogCount</p>
+                                            <p class="announcement-text">文章</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="~/BlogPost/GetList">
+                                    <div class="panel-footer announcement-bottom">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                查看文章列表
+                                            </div>
+                                            <div class="col-xs-6 text-right">
+                                                <i class="fa fa-arrow-circle-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div> 
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <i class="fa fa-tags fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <p class="announcement-heading">@Model.TagCount</p>
+                                            <p class="announcement-text">标签</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="~/BlogTag/GetList">
+                                    <div class="panel-footer announcement-bottom">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                查看标签列表
+                                            </div>
+                                            <div class="col-xs-6 text-right">
+                                                <i class="fa fa-arrow-circle-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content -->
+    </div> 
+   
